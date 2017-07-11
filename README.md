@@ -59,7 +59,6 @@ def deps do
 end
 ```
 
-API Documentation: [ExDoc](https://github.com/elixir-lang/ex_doc)
+API Documentation: [https://hexdocs.pm/coersion](https://hexdocs.pm/coersion).
 
-Once published, the docs can
-be found at [https://hexdocs.pm/coersion](https://hexdocs.pm/coersion).
+License: https://github.com/househappy/coersion/blob/master/LICENSE
