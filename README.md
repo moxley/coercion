@@ -52,7 +52,7 @@ fit for this type of problem, but sometimes it's overkill.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+The package can be installed
 by adding `coercion` to your list of dependencies in `mix.exs`:
 
 ```elixir
@@ -60,6 +60,8 @@ def deps do
   [{:coercion, "~> 1.0.0"}]
 end
 ```
+
+Then, run `mix deps.get`, and you're ready to go.
 
 API Documentation: [https://hexdocs.pm/coercion](https://hexdocs.pm/coercion).
 
