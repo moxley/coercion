@@ -37,10 +37,8 @@ defmodule Coersion.Mixfile do
   end
 
   defp package do
-    # These are the default files included in the package
     [
       name: :coersion,
-      files: ["lib", "priv", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Moxley Stratton"],
       licenses: ["Apache 2.0"],
       links: %{"GitHub" => "https://github.com/househappy/coersion"}
