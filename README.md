@@ -1,4 +1,4 @@
-# Coersion
+# Coercion
 
 Coerce dirty values to clean Elixir primitive types, with validation.
 
@@ -51,14 +51,14 @@ fit for this type of problem, but sometimes it can be too big of a solution.
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `coersion` to your list of dependencies in `mix.exs`:
+by adding `coercion` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:coersion, "~> 1.0.0"}]
+  [{:coercion, "~> 1.0.0"}]
 end
 ```
 
-API Documentation: [https://hexdocs.pm/coersion](https://hexdocs.pm/coersion).
+API Documentation: [https://hexdocs.pm/coercion](https://hexdocs.pm/coercion).
 
-License: https://github.com/househappy/coersion/blob/master/LICENSE
+License: https://github.com/moxley/coercion/blob/master/LICENSE

@@ -1,6 +1,6 @@
-defmodule Coersion do
+defmodule Coercion do
   @moduledoc """
-  Rigorous coersion of untrusted values to native primitive types
+  Rigorous coercion of untrusted values to native primitive types
   """
 
   @spec coerce(any, :integer | :boolean | :string) :: {:ok | :invalid | :blank, String.t | integer | Boolean.t }
@@ -10,8 +10,8 @@ defmodule Coersion do
 
   ## Examples
 
-      iex> import Coersion # For demo purposes
-      Coersion
+      iex> import Coercion # For demo purposes
+      Coercion
 
       iex> coerce(" 20 ", :integer)
       {:ok, 20}

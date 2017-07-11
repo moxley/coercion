@@ -1,9 +1,9 @@
-defmodule Coersion.Mixfile do
+defmodule Coercion.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :coersion,
+      app: :coercion,
       version: "1.0.0",
       elixir: "~> 1.4",
       build_embedded: Mix.env == :prod,
@@ -11,12 +11,12 @@ defmodule Coersion.Mixfile do
       deps: deps(),
 
       # Package
-      name: "Coersion",
+      name: "Coercion",
       package: package(),
       description: description(),
-      source_url: "https://github.com/moxley/coersion",
+      source_url: "https://github.com/moxley/coercion",
       docs: [
-        main: "Coersion", # The main page in the docs
+        main: "Coercion", # The main page in the docs
         extras: ["README.md"]
       ],
     ]
@@ -38,10 +38,10 @@ defmodule Coersion.Mixfile do
 
   defp package do
     [
-      name: :coersion,
+      name: :coercion,
       maintainers: ["Moxley Stratton"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/moxley/coersion"}
+      links: %{"GitHub" => "https://github.com/moxley/coercion"}
     ]
   end
 end

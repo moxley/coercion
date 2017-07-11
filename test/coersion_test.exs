@@ -1,7 +1,7 @@
-defmodule CoersionTest do
+defmodule CoercionTest do
   use ExUnit.Case, async: true
-  import Coersion
-  doctest Coersion
+  import Coercion
+  doctest Coercion
 
   test "coerce :integer" do
     assert coerce("20", :integer) == {:ok, 20}
