@@ -14,7 +14,7 @@ defmodule Coersion.Mixfile do
       name: "Coersion",
       package: package(),
       description: description(),
-      source_url: "https://github.com/househappy/coersion",
+      source_url: "https://github.com/moxley/coersion",
       docs: [
         main: "Coersion", # The main page in the docs
         extras: ["README.md"]
@@ -41,7 +41,7 @@ defmodule Coersion.Mixfile do
       name: :coersion,
       maintainers: ["Moxley Stratton"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/househappy/coersion"}
+      links: %{"GitHub" => "https://github.com/moxley/coersion"}
     ]
   end
 end
