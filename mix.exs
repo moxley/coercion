@@ -32,7 +32,7 @@ defmodule Coercion.Mixfile do
 
   defp description do
     """
-    A tool for coercing and validating dirty values to Elixir primitives.
+    Coerce and validate dirty values to Elixir primitives.
     """
   end
 
