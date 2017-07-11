@@ -47,8 +47,8 @@ Example sources:
   </row>
   ```
 
-[`Ecto.Schema`](https://hexdocs.pm/ecto/Ecto.Schema.html) is often be a good
-fit for this type of problem, but sometimes it can be too big of a solution.
+[`Ecto.Schema`](https://hexdocs.pm/ecto/Ecto.Schema.html) is often a good
+fit for this type of problem, but sometimes it's overkill.
 
 ## Installation
 
