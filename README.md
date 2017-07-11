@@ -1,8 +1,8 @@
 # Coercion
 
-[![Build Status](https://api.travis-ci.org/moxley/coercion.svg?branch=master)](https://travis-ci.org/moxley/coercion)
-
 Coerce dirty values to clean Elixir primitive types, with validation.
+
+[![Build Status](https://api.travis-ci.org/moxley/coercion.svg?branch=master)](https://travis-ci.org/moxley/coercion)
 
 ```elixir
 {:ok, 20} = coerce(" 20 ", :integer)
