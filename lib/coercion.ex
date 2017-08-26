@@ -48,10 +48,6 @@ defmodule Coercion do
 
   """
 
-  def coerce!(value, atom) do
-	{_, value} = coerce(value, atom)
-	value
-  end
   # Integer
   def coerce(value, :integer) when is_integer(value), do: {:ok, value}
   def coerce(value, :integer) when is_float(value), do: {:ok, Kernel.round(value)}
@@ -83,6 +79,11 @@ defmodule Coercion do
     |> coerce(:string, :trimmed)
   end
   def coerce(_value, :string), do: {:invalid, ""}
+
+  def value(value, atom) do
+    {_, value} = coerce(value, atom)
+    value
+  end
 
   #
   # Private functions

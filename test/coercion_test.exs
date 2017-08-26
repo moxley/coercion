@@ -41,4 +41,11 @@ defmodule CoercionTest do
 
     assert coerce(%{}, :string) == {:invalid, ""}
   end
+
+  test "value test" do
+    assert value(" hello ", :string) == "hello"
+    assert value(" 0 ", :boolean) == false
+    assert value(" Y ", :boolean) == true
+    assert value("20", :integer) == 20
+  end
 end
