@@ -80,6 +80,11 @@ defmodule Coercion do
   end
   def coerce(_value, :string), do: {:invalid, ""}
 
+  def value(value, atom) do
+    {_, value} = coerce(value, atom)
+    value
+  end
+
   #
   # Private functions
   #
