@@ -42,6 +42,13 @@ defmodule CoercionTest do
     assert coerce(%{}, :string) == {:invalid, ""}
   end
 
+  test "coerce atom" do
+    _string_atom = :hello
+    _integer_atom = :"11"
+    assert coerce("hello", :atom) == {:ok, :hello}
+    assert coerce("11", :atom) == {:ok, :"11"}
+  end
+
   test "value test" do
     assert value(" hello ", :string) == "hello"
     assert value(" 0 ", :boolean) == false
