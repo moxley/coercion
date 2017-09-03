@@ -45,11 +45,11 @@ defmodule Coercion do
       {:ok, "true"}
       iex> coerce(10.5, :string)
       {:ok, "10.5"}
-      iex(3)> :bellow
+      iex> :bellow
       :bellow
-      iex(4)> coerce("bellow", :atom)
+      iex> coerce("bellow", :atom)
       {:ok, :bellow}
-      iex(3)> coerce("   bellow  ", :atom)
+      iex> coerce("   bellow  ", :atom)
       {:ok, :bellow}
   """
 
@@ -93,7 +93,6 @@ defmodule Coercion do
       |> String.to_existing_atom
     {:ok, atom_value}
   end
-  def coerce(value, :atom) when is_bitstring(value), do: coerce(value, :atom)
   def coerce(value, :atom) when is_integer(value), do: coerce(Integer.to_string(value), :atom)
   def coerce(_value, :atom), do: {:invalid, ""}
 
