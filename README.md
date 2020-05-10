@@ -5,6 +5,8 @@ Coerce dirty values to clean Elixir primitive types, with validation.
 [![Build Status](https://api.travis-ci.org/moxley/coercion.svg?branch=master)](https://travis-ci.org/moxley/coercion)
 
 ```elixir
+import Coercion
+
 {:ok, 20} = coerce(" 20 ", :integer)
 {:invalid, 0} = coerce("  x", :integer)
 
@@ -22,6 +24,10 @@ Coerce dirty values to clean Elixir primitive types, with validation.
 {:blank, ""} = coerce("  ", :string)
 {:ok, "true"} = coerce(true, :string)
 {:ok, "10.5"} = coerce(10.5, :string)
+
+{:ok, ~D[2020-04-02]} = coerce("2020-04-02", :date)
+{:ok, ~U[2020-04-02 12:00:01Z]} = coerce("2020-04-02T12:00:01Z", :datetime)
+{:ok, ~N[2020-04-02 12:00:01]} = coerce("2020-04-02T12:00:01Z", :naive_datetime)
 ```
 
 The primary use case is decoding values that come from external sources where
@@ -29,16 +35,16 @@ everything is just a String.
 
 Example sources:
 
-* URL-encoded values
+- URL-encoded values
   ```
   name=Kate&age=40&subscribed=Y
   ```
-* CSV
+- CSV
   ```csv
   name,age,subscribed
   Kate,40,T
   ```
-* XML
+- XML
   ```xml
   <row>
     <name>Kate</name>

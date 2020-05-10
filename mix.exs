@@ -4,10 +4,10 @@ defmodule Coercion.Mixfile do
   def project do
     [
       app: :coercion,
-      version: "1.0.0",
+      version: "1.1.0",
       elixir: "~> 1.3",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
 
       # Package
@@ -16,9 +16,10 @@ defmodule Coercion.Mixfile do
       description: description(),
       source_url: "https://github.com/moxley/coercion",
       docs: [
-        main: "Coercion", # The main page in the docs
+        # The main page in the docs
+        main: "Coercion",
         extras: ["README.md"]
-      ],
+      ]
     ]
   end
 
@@ -26,7 +27,8 @@ defmodule Coercion.Mixfile do
 
   def deps do
     [
-      {:ex_doc, "~> 0.14", only: :dev, runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 

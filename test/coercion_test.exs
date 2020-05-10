@@ -49,6 +49,24 @@ defmodule CoercionTest do
     assert coerce("11", :atom) == {:ok, :"11"}
   end
 
+  test "coerce date" do
+    assert coerce("2020-04-02", :date) == {:ok, ~D[2020-04-02]}
+    assert coerce("2020-04-", :date) == {:invalid, nil}
+    assert coerce(:hello, :date) == {:invalid, nil}
+  end
+
+  test "coerce datetime" do
+    assert coerce("2020-04-02T12:13:14Z", :datetime) == {:ok, ~U[2020-04-02 12:13:14Z]}
+    assert coerce("2020-04-02T12:13:1", :datetime) == {:invalid, nil}
+    assert coerce(:hello, :datetime) == {:invalid, nil}
+  end
+
+  test "coerce naive_datetime" do
+    assert coerce("2020-04-02T12:13:14", :naive_datetime) == {:ok, ~N[2020-04-02 12:13:14]}
+    assert coerce("2020-04-02T12:13:1", :naive_datetime) == {:invalid, nil}
+    assert coerce(:hello, :naive_datetime) == {:invalid, nil}
+  end
+
   test "value test" do
     assert value(" hello ", :string) == "hello"
     assert value(" 0 ", :boolean) == false

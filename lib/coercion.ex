@@ -3,7 +3,11 @@ defmodule Coercion do
   Rigorous coercion of untrusted values to native primitive types
   """
 
-  @spec coerce(any, :integer | :boolean | :string) :: {:ok | :invalid | :blank, String.t | integer | Boolean.t }
+  @type supported_type :: :integer | :boolean | :string | :atom | :datetime | :naive_datetime
+  @type output_type ::
+          String.t() | integer | boolean | Date.t() | DateTime.t() | NaiveDateTime.t()
+
+  @spec coerce(any, supported_type()) :: {:ok | :invalid | :blank, output_type()}
 
   @doc """
   Coerce and validate a value to the given type.
@@ -51,26 +55,83 @@ defmodule Coercion do
       {:ok, :bellow}
       iex> coerce("   bellow  ", :atom)
       {:ok, :bellow}
+
+      iex> coerce("2020-04-02", :date)
+      {:ok, ~D[2020-04-02]}
+      iex> coerce(:hello, :date)
+      {:invalid, nil}
+      iex> coerce("2020-04-02T12:00:01Z", :datetime)
+      {:ok, ~U[2020-04-02 12:00:01Z]}
+      iex> coerce("2020-04-02T12:00:01Z", :naive_datetime)
+      {:ok, ~N[2020-04-02 12:00:01]}
   """
 
   # Integer
   def coerce(value, :integer) when is_integer(value), do: {:ok, value}
   def coerce(value, :integer) when is_float(value), do: {:ok, Kernel.round(value)}
+
   def coerce(value, :integer) when is_bitstring(value) do
     value
-    |> String.trim
+    |> String.trim()
     |> coerce(:integer, :trimmed)
   end
+
   def coerce(_value, :integer), do: {:invalid, 0}
 
   # Boolean
   def coerce(value, :boolean) when is_boolean(value), do: {:ok, value}
+
   def coerce(value, :boolean) when is_bitstring(value) do
     value
-    |> String.trim
+    |> String.trim()
     |> coerce(:boolean, :trimmed)
   end
+
   def coerce(_value, :boolean), do: {:invalid, false}
+
+  # Date
+  def coerce(%Date{} = value, :date), do: {:ok, value}
+
+  def coerce(value, :date) when is_binary(value) do
+    case Date.from_iso8601(value) do
+      {:ok, date} -> {:ok, date}
+      {:error, _error} -> {:invalid, nil}
+    end
+  end
+
+  def coerce(_value, :date) do
+    {:invalid, nil}
+  end
+
+  # DateTime
+  def coerce(%DateTime{} = value, :datetime), do: {:ok, value}
+
+  def coerce(value, :datetime) when is_binary(value) do
+    case DateTime.from_iso8601(value) do
+      # Note: The DateTime.from_iso8601/1 documentation claims that ISO 8601 does not include a proper timezone
+      # I don't normally use DateTime, so maybe someone else can resolve offset issues.
+      {:ok, dt, _} -> {:ok, dt}
+      {:error, _error} -> {:invalid, nil}
+    end
+  end
+
+  def coerce(_value, :datetime) do
+    {:invalid, nil}
+  end
+
+  # NaiveDateTime
+  def coerce(%NaiveDateTime{} = value, :naive_datetime), do: {:ok, value}
+
+  def coerce(value, :naive_datetime) when is_binary(value) do
+    case NaiveDateTime.from_iso8601(value) do
+      {:ok, dt} -> {:ok, dt}
+      {:error, _error} -> {:invalid, nil}
+    end
+  end
+
+  def coerce(_value, :naive_datetime) do
+    {:invalid, nil}
+  end
 
   # String
   def coerce(value, :string) when is_integer(value), do: coerce(Integer.to_string(value), :string)
@@ -78,21 +139,25 @@ defmodule Coercion do
   def coerce(_value = true, :string), do: coerce("true", :string)
   def coerce(_value = false, :string), do: coerce("false", :string)
   def coerce(value, :string) when is_nil(value), do: coerce("", :string)
+
   def coerce(value, :string) when is_bitstring(value) do
     value
-    |> String.trim
+    |> String.trim()
     |> coerce(:string, :trimmed)
   end
+
   def coerce(_value, :string), do: {:invalid, ""}
 
   # Atom
   def coerce(value, :atom) when is_bitstring(value) do
     atom_value =
       value
-      |> String.trim
-      |> String.to_existing_atom
+      |> String.trim()
+      |> String.to_existing_atom()
+
     {:ok, atom_value}
   end
+
   def coerce(value, :atom) when is_integer(value), do: coerce(Integer.to_string(value), :atom)
   def coerce(_value, :atom), do: {:invalid, ""}
 
@@ -108,6 +173,7 @@ defmodule Coercion do
 
   # Integer from a trimmed string
   defp coerce(_value = "", :integer, :trimmed), do: {:blank, 0}
+
   defp coerce(value, :integer, :trimmed) do
     Integer.parse(value, 10)
     |> coerce(:integer, :parsed)
