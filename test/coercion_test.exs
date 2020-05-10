@@ -55,10 +55,10 @@ defmodule CoercionTest do
     assert coerce(:hello, :date) == {:invalid, nil}
   end
 
-  test "coerce datetime" do
-    assert coerce("2020-04-02T12:13:14Z", :datetime) == {:ok, ~U[2020-04-02 12:13:14Z]}
-    assert coerce("2020-04-02T12:13:1", :datetime) == {:invalid, nil}
-    assert coerce(:hello, :datetime) == {:invalid, nil}
+  test "coerce utc_datetime" do
+    assert coerce("2020-04-02T12:13:14Z", :utc_datetime) == {:ok, ~U[2020-04-02 12:13:14Z]}
+    assert coerce("2020-04-02T12:13:1", :utc_datetime) == {:invalid, nil}
+    assert coerce(:hello, :utc_datetime) == {:invalid, nil}
   end
 
   test "coerce naive_datetime" do

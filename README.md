@@ -31,7 +31,7 @@ import Coercion
 {:invalid, []} == coerce("nope", :list)
 
 {:ok, ~D[2020-04-02]} = coerce("2020-04-02", :date)
-{:ok, ~U[2020-04-02 12:00:01Z]} = coerce("2020-04-02T12:00:01Z", :datetime)
+{:ok, ~U[2020-04-02 12:00:01Z]} = coerce("2020-04-02T12:00:01Z", :utc_datetime)
 {:ok, ~N[2020-04-02 12:00:01]} = coerce("2020-04-02T12:00:01Z", :naive_datetime)
 ```
 

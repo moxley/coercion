@@ -3,8 +3,19 @@ defmodule Coercion do
   Rigorous coercion of untrusted values to native primitive types
   """
 
+  @supported_types [
+    :integer,
+    :boolean,
+    :string,
+    :atom,
+    :map,
+    :list,
+    :utc_datetime,
+    :naive_datetime
+  ]
+
   @type supported_type ::
-          :integer | :boolean | :string | :atom | :map | :list | :datetime | :naive_datetime
+          :integer | :boolean | :string | :atom | :map | :list | :utc_datetime | :naive_datetime
   @type output_type ::
           String.t()
           | integer
@@ -16,6 +27,8 @@ defmodule Coercion do
           | NaiveDateTime.t()
 
   @spec coerce(any, supported_type()) :: {:ok | :invalid | :blank, output_type()}
+
+  def supported_types, do: @supported_types
 
   @doc """
   Coerce and validate a value to the given type.
@@ -77,7 +90,7 @@ defmodule Coercion do
       {:ok, ~D[2020-04-02]}
       iex> coerce(:hello, :date)
       {:invalid, nil}
-      iex> coerce("2020-04-02T12:00:01Z", :datetime)
+      iex> coerce("2020-04-02T12:00:01Z", :utc_datetime)
       {:ok, ~U[2020-04-02 12:00:01Z]}
       iex> coerce("2020-04-02T12:00:01Z", :naive_datetime)
       {:ok, ~N[2020-04-02 12:00:01]}
@@ -131,9 +144,9 @@ defmodule Coercion do
   end
 
   # DateTime
-  def coerce(%DateTime{} = value, :datetime), do: {:ok, value}
+  def coerce(%DateTime{} = value, :utc_datetime), do: {:ok, value}
 
-  def coerce(value, :datetime) when is_binary(value) do
+  def coerce(value, :utc_datetime) when is_binary(value) do
     case DateTime.from_iso8601(value) do
       # Note: The DateTime.from_iso8601/1 documentation claims that ISO 8601 does not include a proper timezone
       # I don't normally use DateTime, so maybe someone else can resolve offset issues.
@@ -142,7 +155,7 @@ defmodule Coercion do
     end
   end
 
-  def coerce(_value, :datetime) do
+  def coerce(_value, :utc_datetime) do
     {:invalid, nil}
   end
 
