@@ -63,7 +63,7 @@ by adding `coercion` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:coercion, "~> 1.0.0"}]
+  [{:coercion, "~> 1.1"}]
 end
 ```
 
