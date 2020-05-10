@@ -3,9 +3,17 @@ defmodule Coercion do
   Rigorous coercion of untrusted values to native primitive types
   """
 
-  @type supported_type :: :integer | :boolean | :string | :atom | :datetime | :naive_datetime
+  @type supported_type ::
+          :integer | :boolean | :string | :atom | :map | :list | :datetime | :naive_datetime
   @type output_type ::
-          String.t() | integer | boolean | Date.t() | DateTime.t() | NaiveDateTime.t()
+          String.t()
+          | integer
+          | boolean
+          | map
+          | list
+          | Date.t()
+          | DateTime.t()
+          | NaiveDateTime.t()
 
   @spec coerce(any, supported_type()) :: {:ok | :invalid | :blank, output_type()}
 
@@ -56,6 +64,15 @@ defmodule Coercion do
       iex> coerce("   bellow  ", :atom)
       {:ok, :bellow}
 
+      iex> coerce(%{"one" => "one"}, :map)
+      {:ok, %{"one" => "one"}}
+      iex> coerce("nope", :map)
+      {:invalid, %{}}
+      iex> coerce(["one", "two"], :list)
+      {:ok, ["one", "two"]}
+      iex> coerce("nope", :list)
+      {:invalid, []}
+
       iex> coerce("2020-04-02", :date)
       {:ok, ~D[2020-04-02]}
       iex> coerce(:hello, :date)
@@ -88,6 +105,16 @@ defmodule Coercion do
   end
 
   def coerce(_value, :boolean), do: {:invalid, false}
+
+  # Map
+
+  def coerce(value, :map) when is_map(value), do: {:ok, value}
+  def coerce(_value, :map), do: {:invalid, %{}}
+
+  # List
+
+  def coerce(value, :list) when is_list(value), do: {:ok, value}
+  def coerce(_value, :list), do: {:invalid, []}
 
   # Date
   def coerce(%Date{} = value, :date), do: {:ok, value}

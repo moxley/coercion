@@ -25,6 +25,11 @@ import Coercion
 {:ok, "true"} = coerce(true, :string)
 {:ok, "10.5"} = coerce(10.5, :string)
 
+{:ok, %{"one" => "one"}} == coerce(%{"one" => "one"}, :map)
+{:invalid, %{}} == coerce("nope", :map)
+{:ok, ["one", "two"]} == coerce(["one", "two"], :list)
+{:invalid, []} == coerce("nope", :list)
+
 {:ok, ~D[2020-04-02]} = coerce("2020-04-02", :date)
 {:ok, ~U[2020-04-02 12:00:01Z]} = coerce("2020-04-02T12:00:01Z", :datetime)
 {:ok, ~N[2020-04-02 12:00:01]} = coerce("2020-04-02T12:00:01Z", :naive_datetime)
@@ -63,7 +68,7 @@ by adding `coercion` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:coercion, "~> 1.1"}]
+  [{:coercion, "~> 1.2"}]
 end
 ```
 

@@ -67,6 +67,16 @@ defmodule CoercionTest do
     assert coerce(:hello, :naive_datetime) == {:invalid, nil}
   end
 
+  test "coerce map" do
+    assert coerce(%{"one" => "one"}, :map) == {:ok, %{"one" => "one"}}
+    assert coerce(["one"], :map) == {:invalid, %{}}
+  end
+
+  test "coerce list" do
+    assert coerce(["one", "two"], :list) == {:ok, ["one", "two"]}
+    assert coerce("one", :list) == {:invalid, []}
+  end
+
   test "value test" do
     assert value(" hello ", :string) == "hello"
     assert value(" 0 ", :boolean) == false
